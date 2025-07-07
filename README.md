@@ -1,4 +1,4 @@
-# Transcriptomic Profiling of iPSC-Derived Dopaminergic Neurons in Parkinson's Disease: LRRK2 vs PARKIN Mutations
+# Transcriptomic Profiling of iPSC-Derived Dopaminergic Neurons in Parkinson's Disease
 
 
 This repository contains datasets, analysis pipelines, and results from an RNA-sequencing study comparing transcriptomic profiles of induced pluripotent stem cell (iPSC)-derived dopaminergic neurons from:
