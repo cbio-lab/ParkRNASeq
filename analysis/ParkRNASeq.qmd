@@ -1,0 +1,47 @@
+---
+title: "ParkRNASeq"
+format: html
+editor: visual
+---
+
+## Loading data and preparing
+
+```{r}
+#| output: false
+library("DESeq2")
+```
+
+```{r}
+directory <- "htseq_out"
+
+sampleFiles <- grep("*.counts",list.files(directory),value=TRUE)
+
+sampleFiles
+```
+
+## DeSeq2 of all samples
+
+
+```{r}
+sampleTable <- read.table("metadata.tsv", sep="\t", header = TRUE)
+
+sampleTable$condition <- factor(sampleTable$Health.PD)
+
+ddsHTSeq <- DESeqDataSetFromHTSeqCount(sampleTable = sampleTable,
+                                       directory = directory,
+                                       design= ~ condition)
+
+dds <- DESeq(ddsHTSeq)
+
+resultsNames(dds) 
+res <- results(dds, name="condition_PD_vs_H")
+res
+
+```
+```{r}
+resOrdered <- res[order(res$pvalue),]
+resOrdered
+
+summary(resOrdered)
+
+```
