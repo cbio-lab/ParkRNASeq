@@ -9,39 +9,178 @@ editor: visual
 ```{r}
 #| output: false
 library("DESeq2")
+library(DT)
 ```
 
 ```{r}
 directory <- "htseq_out"
-
-sampleFiles <- grep("*.counts",list.files(directory),value=TRUE)
-
-sampleFiles
 ```
 
 ## DeSeq2 of all samples
 
+Load metadata and output samples names
 
 ```{r}
 sampleTable <- read.table("metadata.tsv", sep="\t", header = TRUE)
-
 sampleTable$condition <- factor(sampleTable$Health.PD)
+print(sampleTable$ID)
+```
+
+Load data and print number of transcripts
+
+```{r}
 
 ddsHTSeq <- DESeqDataSetFromHTSeqCount(sampleTable = sampleTable,
                                        directory = directory,
                                        design= ~ condition)
 
+print(ddsHTSeq@elementMetadata@nrows)
+```
+
+Filter data to keep transcripts which have at least 10 reads in total
+
+```{r}
+keep <- rowSums(counts(ddsHTSeq)) >= 10
+ddsHTSeq <- ddsHTSeq[keep,]
+print(ddsHTSeq@elementMetadata@nrows)
+```
+
+Analysis
+
+```{r}
 dds <- DESeq(ddsHTSeq)
 
 resultsNames(dds) 
 res <- results(dds, name="condition_PD_vs_H")
-res
 
 ```
+
 ```{r}
-resOrdered <- res[order(res$pvalue),]
-resOrdered
+resOrderedAll <- res[order(res$pvalue),]
 
-summary(resOrdered)
+summary(resOrderedAll)
 
+```
+
+```{r}
+datatable(as.data.frame(resOrderedAll@listData, row.names = resOrderedAll@rownames))
+```
+
+## DeSeq2 of SPb
+
+Load metadata, filter SPb samples and output samples names
+
+```{r}
+sampleTable <- read.table("metadata.tsv", sep="\t", header = TRUE)
+sampleTable$condition <- factor(sampleTable$Health.PD)
+sampleTable <- sampleTable[sampleTable$Cells.Msc.SPb=='SPb', ]
+print(sampleTable$ID)
+
+```
+
+Load data and print number of transcripts
+
+```{r}
+
+ddsHTSeq <- DESeqDataSetFromHTSeqCount(sampleTable = sampleTable,
+                                       directory = directory,
+                                       design= ~ condition)
+
+print(ddsHTSeq@elementMetadata@nrows)
+```
+
+Filter data to keep transcripts which have at least 10 reads in total
+
+```{r}
+keep <- rowSums(counts(ddsHTSeq)) >= 10
+ddsHTSeq <- ddsHTSeq[keep,]
+print(ddsHTSeq@elementMetadata@nrows)
+```
+
+Analysis
+
+```{r}
+dds <- DESeq(ddsHTSeq)
+
+resultsNames(dds) 
+res <- results(dds, name="condition_PD_vs_H")
+
+```
+
+```{r}
+resOrderedSPb <- res[order(res$pvalue),]
+
+summary(resOrderedSPb)
+
+```
+
+```{r}
+datatable(as.data.frame(resOrderedSPb@listData, row.names = resOrderedSPb@rownames))
+```
+
+
+## DeSeq2 of Msc
+
+Load metadata, filter Msc samples and output samples names
+
+```{r}
+sampleTable <- read.table("metadata.tsv", sep="\t", header = TRUE)
+sampleTable$condition <- factor(sampleTable$Health.PD)
+sampleTable <- sampleTable[sampleTable$Cells.Msc.SPb=='Msc', ]
+print(sampleTable$ID)
+
+```
+
+Load data and print number of transcripts
+
+```{r}
+
+ddsHTSeq <- DESeqDataSetFromHTSeqCount(sampleTable = sampleTable,
+                                       directory = directory,
+                                       design= ~ condition)
+
+print(ddsHTSeq@elementMetadata@nrows)
+```
+
+Filter data to keep transcripts which have at least 10 reads in total
+
+```{r}
+keep <- rowSums(counts(ddsHTSeq)) >= 10
+ddsHTSeq <- ddsHTSeq[keep,]
+print(ddsHTSeq@elementMetadata@nrows)
+```
+
+Analysis
+
+```{r}
+dds <- DESeq(ddsHTSeq)
+
+resultsNames(dds) 
+res <- results(dds, name="condition_PD_vs_H")
+
+```
+
+```{r}
+resOrderedMsc <- res[order(res$pvalue),]
+
+summary(resOrderedMsc)
+
+```
+
+```{r}
+datatable(as.data.frame(resOrderedMsc@listData, row.names = resOrderedMsc@rownames))
+```
+
+
+## Compare results
+
+```{r}
+print("All")
+print(resOrderedAll@rownames[0:10])
+
+print("SPb")
+print(resOrderedSPb@rownames[0:10])
+
+print("Msc")
+print(resOrderedMsc@rownames[0:10])
 ```
