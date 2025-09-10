@@ -184,3 +184,35 @@ print(resOrderedSPb@rownames[0:10])
 print("Msc")
 print(resOrderedMsc@rownames[0:10])
 ```
+## All transcripts with adj p-val <1e-10
+
+```{r}
+resOrderedAll <- na.omit(resOrderedAll)
+resOrderedAllFiltered <- resOrderedAll[resOrderedAll$padj < 1e-10, ]
+
+resOrderedAllFilteredNames <- resOrderedAllFiltered@rownames
+
+resOrderedAllFilteredNames
+```
+
+## Msc transcripts with adj p-val <1e-10
+
+```{r}
+resOrderedMsc <- na.omit(resOrderedMsc)
+resOrderedMscFiltered <- resOrderedMsc[resOrderedMsc$padj < 1e-10, ]
+
+resOrderedMscFilteredNames <- resOrderedMscFiltered@rownames
+
+resOrderedMscFilteredNames
+```
+
+## SPb transcripts with adj p-val <1e-10
+
+```{r}
+resOrderedSPb <- na.omit(resOrderedSPb)
+resOrderedSPbFiltered <- resOrderedSPb[resOrderedSPb$padj < 1e-10, ]
+
+resOrderedSPbFilteredNames <- resOrderedSPbFiltered@rownames
+
+resOrderedSPbFilteredNames
+```
