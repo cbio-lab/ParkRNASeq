@@ -1,4 +1,4 @@
-# ParkRNASeq – Differential expression and PPI networks
+# Differential expression and PPI networks
 
 Transcriptomic analysis of iPSC-derived dopaminergic neurons in hereditary Parkinson's disease (LRRK2 and Parkin mutations).
 
