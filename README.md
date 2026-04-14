@@ -22,7 +22,7 @@ Transcriptomic analysis of iPSC-derived dopaminergic neurons in hereditary Parki
 2. Open `ParkRNASeq.qmd` in RStudio → Render
 
 ## Data
-Raw RNA-seq data: NCBI BioProject **PRJNA1346308**  
+Raw RNA-seq data: NCBI BioProject [PRJNA1346308](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1346308/)
 Processed normalized counts and metadata are provided in `data/` where distribution is permitted.
 
 ## Related publication
