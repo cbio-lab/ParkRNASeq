@@ -2,6 +2,8 @@
 
 Transcriptomic analysis of iPSC-derived dopaminergic neurons in hereditary Parkinson's disease (LRRK2 and Parkin mutations).
 
+🔗 **Access the full study report:**(http://download.ripcm.com/PARK2023/ParkRNASeq/ParkRNASeq.html)
+
 ## Purpose
 - Quality control (PCA, PERMANOVA)
 - Differential expression analysis (DESeq2) for four contrasts:
